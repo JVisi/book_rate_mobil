@@ -60,8 +60,7 @@ class SizeConfig {
 }
 
 class WebConfig {
-  static String url = "http://192.168.6.214:5000";
-  //final String authKey = "zseni";
+  static String url = "https://bookrate-api.herokuapp.com";
   static Map<String, String> headers = {
     HttpHeaders.contentTypeHeader:"application/json"
   };

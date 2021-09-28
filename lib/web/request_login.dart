@@ -22,7 +22,6 @@ class RequestLogin{
       }
       return l.user;
     }catch(e){
-      print(e);
       ErrorMessage err=ErrorMessage.fromJson(jsonDecode(response.body));
       return Future.error(err.error);
     }

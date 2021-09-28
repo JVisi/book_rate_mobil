@@ -4,6 +4,7 @@ import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/book_page.dart';
 import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
+import 'package:book_rate/serialized/wishList/wish_list.dart';
 import 'package:book_rate/web/get_book.dart';
 import 'package:book_rate/web/get_wishlist.dart';
 import 'package:flutter/cupertino.dart';
@@ -144,9 +145,10 @@ class LoadBooks extends StatelessWidget {
     // TODO: implement build
     return LoadingHandler(
       future: GetWishlist(AppModel.of(context).getUser().id).sendRequest,
-      succeeding: (Library l) {
-        if(l.books.isNotEmpty) {
-          return Books(library: l);
+      succeeding: (Wishlist wl) {
+        if(wl.wishlist.isNotEmpty) {
+          List<Book> l=wl.wishlist.map((e) => e.book).toList();
+          return Books(library: Library(books: l));
         }
         return EmptyWishlist();
       },

@@ -5,7 +5,7 @@ Widget EmptyWishlist() {
   return SafeArea(
       child: Scaffold(
     body: Column(
-      children: const [Text("Wishlist is empty, motherfucker")],
+      children: const [Center(child: Text("Wishlist is empty, motherfucker"))],
     ),
   ));
 }
