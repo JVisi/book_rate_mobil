@@ -2,9 +2,15 @@ import 'package:book_rate/config/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:book_rate/config/core.dart';
 import 'package:book_rate/screens/userAuth/login.dart';
+import 'package:scoped_model/scoped_model.dart';
+
+import 'config/model.dart';
 
 
-void main() => runApp(const MyApp());
+void main() {
+  final appModel=AppModel();
+  runApp(ScopedModel<AppModel>(model: appModel, child: const MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -32,7 +38,7 @@ class Start extends StatelessWidget{
     return LoadingHandler(future: loadLoginCreds,
         succeeding: (Map<String?,String?> creds){
       if (creds["email"] != null && creds["password"] != null) {
-        //killLoginCreds();
+        killLoginCreds();
         return LoginState().login(creds["email"]!, creds["password"]!,false,false,const LoginScreen());
       }
       return const LoginScreen();

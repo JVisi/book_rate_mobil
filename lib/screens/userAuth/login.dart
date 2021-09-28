@@ -1,3 +1,4 @@
+import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,13 +120,13 @@ class LoginState extends State<LoginScreen> {
     return LoadingHandler<User?>(
       future: RequestLogin(email: email,password: password,keepLogin: keepLoginData!).sendRequest,
       succeeding: (User? data){
-        return MainPage(name: data!.name);
+        AppModel.of(context).setUser(data!);
+        return MainPage(name: data.name);
       },
       onError: onError,
       needReloadButton: true,
 
     );
-    ///if response body ok
   }
 }
 

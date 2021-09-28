@@ -57,14 +57,14 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
         body: Center(
           child: Column(
             children: <Widget>[
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical:SizeConfig.blockSizeVertical),
-                child: Icon(icon != null ? icon : Icons.warning,color: Colors.red,),
+                child: Icon(icon ?? Icons.warning,color: Colors.red,),
               ),
-              Text(name != null ? name : "Error",
+              Text(name ?? "Error",
                 style: themeConfig().textTheme.bodyText1,),
               needReload!=null?Padding(
                 padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
@@ -90,9 +90,9 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
           color: Colors.blue,
           size: SizeConfig.blockSizeVertical*10,
         ),
-        Icon(icon != null ? icon : Icons.hourglass_empty),
-        Text(name != null ? name : "Now Loading...",style: themeConfig().textTheme.bodyText1),
-        Text(desc != null ? desc : "",style: themeConfig().textTheme.bodyText1),
+        Icon(icon ?? Icons.hourglass_empty),
+        Text(name ?? "Now Loading...",style: themeConfig().textTheme.bodyText1),
+        Text(desc ?? "",style: themeConfig().textTheme.bodyText1),
         Spacer(
           flex: 2,
         )

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:book_rate/screens/userAuth/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ Future<void> killLoginCreds() async{
   prefs.remove("email");
   prefs.remove("password");
 }
+
 
 class SizeConfig {
   static MediaQueryData? _mediaQueryData;
@@ -57,13 +60,12 @@ class SizeConfig {
 }
 
 class WebConfig {
-  static String url = "https://bookrate-api.herokuapp.com";
-  static String authKey = "zseni";
+  static String url = "http://192.168.6.214:5000";
+  //final String authKey = "zseni";
   static Map<String, String> headers = {
-    "Content-type": "application/json"
+    HttpHeaders.contentTypeHeader:"application/json"
   };
-
-//"authorization": WebConfig.authKey,
+  static String Cookie=""; //"authorization": WebConfig.authKey,
 }
 class ListViewWithoutGlowEffect extends ScrollBehavior{
   @override

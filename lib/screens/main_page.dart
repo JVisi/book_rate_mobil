@@ -1,8 +1,11 @@
 import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/loader.dart';
+import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/book_page.dart';
+import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/web/get_book.dart';
+import 'package:book_rate/web/get_wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -140,9 +143,12 @@ class LoadBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return LoadingHandler(
-      future: GetAllBooks().sendRequest,
+      future: GetWishlist(AppModel.of(context).getUser().id).sendRequest,
       succeeding: (Library l) {
-        return Books(library: l);
+        if(l.books.isNotEmpty) {
+          return Books(library: l);
+        }
+        return EmptyWishlist();
       },
     );
   }

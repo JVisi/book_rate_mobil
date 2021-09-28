@@ -1,3 +1,4 @@
+import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/main_page.dart';
 import 'package:book_rate/web/request_register.dart';
 import 'package:flutter/cupertino.dart';
@@ -155,7 +156,8 @@ class RegisterState extends State<RegisterScreen> {
     return LoadingHandler<User?>(
       future: RequestRegister(email: email,name:name,password: password,keepLogin: keepLoginData!).sendRequest,
       succeeding: (User? data){
-        return MainPage(name: data!.name);
+        AppModel.of(context).setUser(data!);
+        return MainPage(name: data.name);
       },
       onError: onError,
       needReloadButton: true,

@@ -14,7 +14,7 @@ class RequestLogin{
 
   Future<User?> sendRequest() async{
     final  String body=jsonEncode({"user":{"email":email,"password":password}});
-    final response = await http.post(Uri.parse(WebConfig.url+"/auth/login"), headers: WebConfig.headers,body: body).timeout(Duration(seconds: 10));
+    final response = await http.post(Uri.parse(WebConfig.url+"/mobile/login"), headers: WebConfig.headers,body: body).timeout(const Duration(seconds: 10));
     try{
       LoginResponse l=LoginResponse.fromJson(jsonDecode(response.body));
       if(keepLogin){

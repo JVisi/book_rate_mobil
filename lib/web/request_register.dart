@@ -15,7 +15,7 @@ class RequestRegister{
 
   Future<User?> sendRequest() async{
     final  String body=jsonEncode({"user":{"email":email,"name":name,"password":password}});
-    final response = await http.post(Uri.parse(WebConfig.url+"/auth/register"), headers: WebConfig.headers,body: body).timeout(const Duration(seconds: 10));
+    final response = await http.post(Uri.parse(WebConfig.url+"/mobile/register"), headers: WebConfig.headers,body: body).timeout(const Duration(seconds: 10));
     try{
       LoginResponse l=LoginResponse.fromJson(jsonDecode(response.body));
       if(keepLogin){
