@@ -6,6 +6,7 @@ import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/serialized/user/user.dart';
 import 'package:book_rate/web/request_login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,6 +33,7 @@ class LoginState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(AppLocalizations.of(context)!.helloWorld);
     SizeConfig().init(context);
     // TODO: implement build
     return Scaffold(
@@ -39,6 +41,7 @@ class LoginState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: <Widget>[
+            Text(AppLocalizations.of(context)!.helloWorld),
             const Spacer(flex: 1,),
             AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
