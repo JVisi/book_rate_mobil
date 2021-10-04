@@ -51,7 +51,7 @@ class Start extends StatelessWidget{
     return LoadingHandler(future: loadLoginCreds,
         succeeding: (Map<String?,String?> creds){
       if (creds["email"] != null && creds["password"] != null) {
-        killLoginCreds();
+        //killLoginCreds();
         return LoginState().login(creds["email"]!, creds["password"]!,false,false,const LoginScreen());
       }
       return const LoginScreen();
