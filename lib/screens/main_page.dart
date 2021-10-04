@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   final String name;
@@ -54,7 +55,7 @@ class MainPageState extends State<MainPage> {
                                   onPressed: () {
                                     Navigator.push(context, MaterialPageRoute(builder: (context)=>LoadBooks()));
                                   },
-                                  child: Text("Load books",style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
+                                  child: Text(AppLocalizations.of(context)!.loadBooks,style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
                               ),
                             ],
                           ),
@@ -90,7 +91,7 @@ class MainPageState extends State<MainPage> {
                                   //Navigator.push(context, MaterialPageRoute(builder: (context)=>LoadBooks()));
                                   await scanBarcodeNormal();
                                 },
-                                child: Text("Load books",style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
+                                child: Text(AppLocalizations.of(context)!.loadBooks,style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
                               ),
                             ],
                           ),
@@ -150,7 +151,7 @@ class LoadBooks extends StatelessWidget {
           List<Book> l=wl.wishlist.map((e) => e.book).toList();
           return Books(library: Library(books: l));
         }
-        return EmptyWishlist();
+        return EmptyWishlist(context);
       },
     );
   }

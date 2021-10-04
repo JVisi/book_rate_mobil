@@ -1,6 +1,20 @@
 {
     "helloWorld": "Hello World!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
+    "error": "Error",
+    "reloadBtn": "Reload",
+    "loading": "Now Loading...",
+    "email": "Email address",
+    "lengthWarning": "Must be at least 3 characters",
+    "password": "Password",
+    "saveLogin": "Save login data",
+    "loginBtn": "Login!",
+    "regBtn": "Register",
+    "fillCredsWarning": "Fill all the fields!",
+    "noAccount_Login": "Don't have an account? Create one here!",
+    "noAccount_Reg": "Already have an account? Sign in!",
+    "username": "Username",
+    "passwordAgain": "Password Again!",
+    "passwordMatch": "Passwords should match!",
+    "loadBooks": "Load books",
+    "wishlistEmpty": "Wishlist is empty!"
 }

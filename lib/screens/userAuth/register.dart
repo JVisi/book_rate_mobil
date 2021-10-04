@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/serialized/user/user.dart';
-import 'package:book_rate/web/request_login.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -53,16 +53,16 @@ class RegisterState extends State<RegisterScreen> {
                   child: ListView(children: [
                     AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: "Email address",
-                            errorText: !isEmailOK! && email.text.isNotEmpty?"Must be at least 3 characters":null),
+                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,
+                            errorText: !isEmailOK! && email.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                         controller: email,
                         style: themeConfig().textTheme.bodyText1,
                       ),
                     ),
                     AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: "Username",
-                            errorText: !isNameOK! && name.text.isNotEmpty?"Must be at least 3 characters":null),
+                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.username,
+                            errorText: !isNameOK! && name.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                         controller: name,
                         style: themeConfig().textTheme.bodyText1,
                       ),
@@ -70,8 +70,8 @@ class RegisterState extends State<RegisterScreen> {
                     AspectRatio(
                       aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                          decoration: InputDecoration(hintText: "password",
-                              errorText: !isPasswordOK! && password.text.isNotEmpty?"Must be at least 3 characters":null),
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,
+                              errorText: !isPasswordOK! && password.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                           controller: password,
                           obscureText: true, style: themeConfig().textTheme.bodyText1
                       ),
@@ -79,8 +79,8 @@ class RegisterState extends State<RegisterScreen> {
                     AspectRatio(
                       aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                          decoration: InputDecoration(hintText: "password again",
-                              errorText: !doPasswordsMatch! && password.text.isNotEmpty?"Passwords should match":null),
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain,
+                              errorText: !doPasswordsMatch! && password.text.isNotEmpty?AppLocalizations.of(context)!.passwordMatch:null),
                           controller: password2,
                           obscureText: true, style: themeConfig().textTheme.bodyText1
                       ),
@@ -90,7 +90,7 @@ class RegisterState extends State<RegisterScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Text("Save login data",style: themeConfig().textTheme.bodyText1),
+                          Text(AppLocalizations.of(context)!.saveLogin,style: themeConfig().textTheme.bodyText1),
                           Checkbox(
                               value: keepLoginData,
                               onChanged: (bool? _val) {
@@ -106,7 +106,7 @@ class RegisterState extends State<RegisterScreen> {
                       child: ElevatedButton(style: ElevatedButton.styleFrom(
                           padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*2,horizontal: SizeConfig.blockSizeHorizontal*10)
                       ),
-                        child: Text("Register",style: themeConfig().textTheme.bodyText1),
+                        child: Text(AppLocalizations.of(context)!.regBtn,style: themeConfig().textTheme.bodyText1),
                         onPressed: () {
                           if(isEmailOK! && isPasswordOK! && isNameOK! && doPasswordsMatch! ){
                             Navigator.push(
@@ -115,8 +115,8 @@ class RegisterState extends State<RegisterScreen> {
                                     builder: (context) => register(email.text,name.text, password.text, keepLoginData!, true, null)));
                           }
                           else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Watch out filling the form properly"),
-                              duration: Duration(milliseconds: 750),));
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.fillCredsWarning),
+                              duration: const Duration(milliseconds: 750),));
                           }
                         },
                       ),
@@ -124,7 +124,7 @@ class RegisterState extends State<RegisterScreen> {
                     TextButton(onPressed: (){
                       Navigator.pop(context);
                     },
-                      child: Text("Already have an account? Sign in!",
+                      child: Text(AppLocalizations.of(context)!.noAccount_Reg,
                           style: themeConfig().textTheme.bodyText1),),
                   ],),
                 ),

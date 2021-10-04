@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:book_rate/config/core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoadingHandler<T> extends StatefulWidget {
   final Future<T> Function()? future;
@@ -64,12 +65,12 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
                 padding: EdgeInsets.symmetric(vertical:SizeConfig.blockSizeVertical),
                 child: Icon(icon ?? Icons.warning,color: Colors.red,),
               ),
-              Text(name ?? "Error",
+              Text(name ?? AppLocalizations.of(context)!.error,
                 style: themeConfig().textTheme.bodyText1,),
               needReload!=null?Padding(
                 padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
                 child: ElevatedButton(onPressed: refresh,
-                    child: Text("Reload",style: themeConfig().textTheme.bodyText1)
+                    child: Text(AppLocalizations.of(context)!.reloadBtn,style: themeConfig().textTheme.bodyText1)
                 ),
               ): Text(""),
               Spacer(
@@ -91,7 +92,7 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
           size: SizeConfig.blockSizeVertical*10,
         ),
         Icon(icon ?? Icons.hourglass_empty),
-        Text(name ?? "Now Loading...",style: themeConfig().textTheme.bodyText1),
+        Text(name ?? AppLocalizations.of(context)!.loading,style: themeConfig().textTheme.bodyText1),
         Text(desc ?? "",style: themeConfig().textTheme.bodyText1),
         Spacer(
           flex: 2,
@@ -116,10 +117,10 @@ class SnapshotManager<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    if (this.snapshot!.connectionState == ConnectionState.waiting) return onWait!;
+    if (snapshot!.connectionState == ConnectionState.waiting) return onWait!;
     if (snapshot!.hasData) {
-      return this.onSuccess!(snapshot!.data!);
+      return onSuccess!(snapshot!.data!);
     }
-    return this.onError!(snapshot!.error);
+    return onError!(snapshot!.error);
   }
 }

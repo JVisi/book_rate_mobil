@@ -33,7 +33,6 @@ class LoginState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(AppLocalizations.of(context)!.helloWorld);
     SizeConfig().init(context);
     // TODO: implement build
     return Scaffold(
@@ -45,8 +44,8 @@ class LoginState extends State<LoginScreen> {
             const Spacer(flex: 1,),
             AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
-                decoration: InputDecoration(hintText: "Email address",
-                errorText: !isEmailOK! && email.text.isNotEmpty?"Must be at least 3 characters":null),
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,
+                errorText: !isEmailOK! && email.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                 controller: email,
                 style: themeConfig().textTheme.bodyText1,
               ),
@@ -54,8 +53,8 @@ class LoginState extends State<LoginScreen> {
             AspectRatio(
               aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
-                decoration: InputDecoration(hintText: "password",
-                errorText: !isPasswordOK! && password.text.isNotEmpty?"Must be at least 3 characters":null),
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,
+                errorText: !isPasswordOK! && password.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                 controller: password,
                 obscureText: true, style: themeConfig().textTheme.bodyText1
               ),
@@ -65,7 +64,7 @@ class LoginState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Save login data",style: themeConfig().textTheme.bodyText1),
+                  Text(AppLocalizations.of(context)!.saveLogin,style: themeConfig().textTheme.bodyText1),
                   Checkbox(
                       value: keepLoginData,
                       onChanged: (bool? _val) {
@@ -81,7 +80,7 @@ class LoginState extends State<LoginScreen> {
               child: ElevatedButton(style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*2,horizontal: SizeConfig.blockSizeHorizontal*10)
               ),
-                child: Text("Login",style: themeConfig().textTheme.bodyText1),
+                child: Text(AppLocalizations.of(context)!.loginBtn,style: themeConfig().textTheme.bodyText1),
                 onPressed: () {
                   if(isEmailOK! && isPasswordOK!){
                   Navigator.push(
@@ -90,8 +89,8 @@ class LoginState extends State<LoginScreen> {
                           builder: (context) => login(email.text, password.text, keepLoginData!, true, null)));
                   }
                   else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Fill all the stuff"),
-                      duration: Duration(milliseconds: 750),));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.fillCredsWarning),
+                      duration: const Duration(milliseconds: 750),));
                   }
                 },
               ),
@@ -99,7 +98,7 @@ class LoginState extends State<LoginScreen> {
             TextButton(onPressed: (){
               Navigator.pushNamed(context, '/registerPage');
             },
-              child: Text("Don't have an account? Create one here!",style: themeConfig().textTheme.bodyText1),),
+              child: Text(AppLocalizations.of(context)!.noAccount_Login,style: themeConfig().textTheme.bodyText1),),
             const Spacer(flex:1)
           ],
         ),

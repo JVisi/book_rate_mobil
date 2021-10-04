@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget EmptyWishlist() {
+Widget EmptyWishlist(BuildContext context) {
   return SafeArea(
       child: Scaffold(
     body: Column(
-      children: const [Center(child: Text("Wishlist is empty, motherfucker"))],
+      children: [Center(child: Text(AppLocalizations.of(context)!.wishlistEmpty))],
     ),
   ));
 }
