@@ -11,9 +11,14 @@ import 'config/model.dart';
 
 
 void main() {
-  final appModel=AppModel();
-  runApp(ScopedModel<AppModel>(model: appModel, child: const MyApp()));
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()));
+  final appModel = AppModel();
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
+      value) =>
+      runApp(ScopedModel<AppModel>(model: appModel, child: const MyApp())));
+
+
+  //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,24 +45,29 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Start(), ///check memory
+      home: const Start(),
+
+      ///check memory
     );
   }
 }
-class Start extends StatelessWidget{
+
+class Start extends StatelessWidget {
   const Start({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return LoadingHandler(future: loadLoginCreds,
-        succeeding: (Map<String?,String?> creds){
-      if (creds["email"] != null && creds["password"] != null) {
-        //killLoginCreds();
-        return LoginState().login(context, creds["email"]!, creds["password"]!,false,false,const LoginScreen());
-      }
-      return const LoginScreen();
-    });
+        succeeding: (Map<String?, String?> creds) {
+          if (creds["email"] != null && creds["password"] != null) {
+            //killLoginCreds();
+            return LoginState().login(
+                context, creds["email"]!, creds["password"]!, false, false,
+                const LoginScreen());
+          }
+          return const LoginScreen();
+        });
   }
 
 }
