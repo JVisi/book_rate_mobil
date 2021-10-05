@@ -57,8 +57,7 @@ class MainPageState extends State<MainPage> {
                         AppLocalizations.of(context)!.scanBarcode,
                         Icons.qr_code)
                   ],
-                )
-=======
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -155,13 +154,6 @@ class MainPageState extends State<MainPage> {
         context,
         MaterialPageRoute(
             builder: (context) => LoadingHandler(
-
-                  future: GetRatesOfUser(AppModel.of(context).getUser().id)
-                      .sendRequest,
-                  succeeding: (Rates wl) {
-                    //List<Book> l=wl.wishlist.map((e) => e.book).toList();
-                    //return Books(library: Library(books: l));
-=======
                   future: GetAllBooks()
                       .sendRequest,
                   succeeding: (Library wl) {
