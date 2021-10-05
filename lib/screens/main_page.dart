@@ -40,24 +40,6 @@ class MainPageState extends State<MainPage> {
           Expanded(
             child: ListView(
               children: [
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    menu_tile(context, loadBooks,
-                        AppLocalizations.of(context)!.loadBooks, null)
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    menu_tile(
-                        context,
-                        scanBarcodeNormal,
-                        AppLocalizations.of(context)!.scanBarcode,
-                        Icons.qr_code)
-                  ],
-                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
