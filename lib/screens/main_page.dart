@@ -7,6 +7,7 @@ import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/serialized/rates/rates.dart';
 import 'package:book_rate/serialized/wishList/wish_list.dart';
+import 'package:book_rate/web/barcode_search.dart';
 import 'package:book_rate/web/get_book.dart';
 import 'package:book_rate/web/get_user_books.dart';
 import 'package:book_rate/web/get_wishlist.dart';
@@ -136,7 +137,7 @@ class MainPageState extends State<MainPage> {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
 
-      ///MAKE REQUEST HERE
+      await BarcodeSearch(barcode: barcodeScanRes).sendRequest();
 
       print(barcodeScanRes);
     } on PlatformException {
