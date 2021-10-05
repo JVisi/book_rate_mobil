@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:book_rate/screens/userAuth/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

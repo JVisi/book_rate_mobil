@@ -29,7 +29,7 @@ Widget menu_tile<T>(BuildContext context, Future<T> Function() function, String 
       ),
     ),
     onTap: () async{
-      await function;
+      await function();
     },
   );
 }
