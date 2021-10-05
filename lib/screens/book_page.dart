@@ -10,7 +10,7 @@ class Books extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    final bookTiles=library.books.map((book) => bookTile(book));
+    final bookTiles=library.books.map((book) => bookTile(context, book));
 
     // TODO: implement build
     return Scaffold(
