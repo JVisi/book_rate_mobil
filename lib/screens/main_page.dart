@@ -5,8 +5,10 @@ import 'package:book_rate/screens/book_page.dart';
 import 'package:book_rate/screens/menu_tile.dart';
 import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
+import 'package:book_rate/serialized/rates/rates.dart';
 import 'package:book_rate/serialized/wishList/wish_list.dart';
 import 'package:book_rate/web/get_book.dart';
+import 'package:book_rate/web/get_user_books.dart';
 import 'package:book_rate/web/get_wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +26,6 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-  @override
-  void setState(fn) {
-  }
 
   String _scanBarcode = "";
 
@@ -41,6 +40,25 @@ class MainPageState extends State<MainPage> {
           Expanded(
             child: ListView(
               children: [
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    menu_tile(context, loadBooks,
+                        AppLocalizations.of(context)!.loadBooks, null)
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    menu_tile(
+                        context,
+                        scanBarcodeNormal,
+                        AppLocalizations.of(context)!.scanBarcode,
+                        Icons.qr_code)
+                  ],
+                )
+=======
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -103,6 +121,7 @@ class MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
+
               ],
             ),
           )
@@ -136,12 +155,19 @@ class MainPageState extends State<MainPage> {
         context,
         MaterialPageRoute(
             builder: (context) => LoadingHandler(
+
+                  future: GetRatesOfUser(AppModel.of(context).getUser().id)
+                      .sendRequest,
+                  succeeding: (Rates wl) {
+                    //List<Book> l=wl.wishlist.map((e) => e.book).toList();
+                    //return Books(library: Library(books: l));
+=======
                   future: GetAllBooks()
                       .sendRequest,
                   succeeding: (Library wl) {
                       //List<Book> l = wl.wishlist.map((e) => e.book).toList();
                       return Books(library: wl);
-                    return EmptyWishlist(context);
+                  return EmptyWishlist(context);
                   },
                 )));
   }
