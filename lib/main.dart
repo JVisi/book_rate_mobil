@@ -2,6 +2,7 @@ import 'package:book_rate/config/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:book_rate/config/core.dart';
 import 'package:book_rate/screens/userAuth/login.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,6 +13,7 @@ import 'config/model.dart';
 void main() {
   final appModel=AppModel();
   runApp(ScopedModel<AppModel>(model: appModel, child: const MyApp()));
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {

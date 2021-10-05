@@ -26,12 +26,6 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-  @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
 
   String _scanBarcode = "";
 
@@ -40,11 +34,13 @@ class MainPageState extends State<MainPage> {
     SizeConfig().init(context);
     //return const LoadBooks();
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
             child: ListView(
               children: [
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -62,6 +58,70 @@ class MainPageState extends State<MainPage> {
                         Icons.qr_code)
                   ],
                 )
+=======
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(context, loadBooks,
+                          AppLocalizations.of(context)!.loadBooks, null)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.scanBarcode,
+                          Icons.qr_code)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.myBooks,
+                          Icons.collections_bookmark)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.whishList,
+                          Icons.list)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.settings,
+                          Icons.settings)
+                    ],
+                  ),
+                ),
+
               ],
             ),
           )
@@ -84,7 +144,6 @@ class MainPageState extends State<MainPage> {
       barcodeScanRes = 'Failed to get platform version.';
     }
 
-    if (!mounted) return;
 
     setState(() {
       _scanBarcode = barcodeScanRes;
@@ -96,12 +155,19 @@ class MainPageState extends State<MainPage> {
         context,
         MaterialPageRoute(
             builder: (context) => LoadingHandler(
+
                   future: GetRatesOfUser(AppModel.of(context).getUser().id)
                       .sendRequest,
                   succeeding: (Rates wl) {
                     //List<Book> l=wl.wishlist.map((e) => e.book).toList();
                     //return Books(library: Library(books: l));
-                    return EmptyWishlist(context);
+=======
+                  future: GetAllBooks()
+                      .sendRequest,
+                  succeeding: (Library wl) {
+                      //List<Book> l = wl.wishlist.map((e) => e.book).toList();
+                      return Books(library: wl);
+                  return EmptyWishlist(context);
                   },
                 )));
   }
