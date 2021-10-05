@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget menu_tile<T>(BuildContext context, Future<T> function, String title, IconData? icon) {
+Widget menu_tile<T>(BuildContext context, Future<T> Function() function, String title, IconData? icon) {
   return GestureDetector(
     child: SizedBox(
       width: SizeConfig.screenHeight/3,

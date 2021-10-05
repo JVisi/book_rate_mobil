@@ -24,7 +24,12 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
   String _scanBarcode="";
 
   @override
@@ -40,13 +45,13 @@ class MainPageState extends State<MainPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    menu_tile(context, scanBarcodeNormal(), AppLocalizations.of(context)!.loadBooks, null)
+                    menu_tile(context, scanBarcodeNormal, AppLocalizations.of(context)!.loadBooks, null)
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                      menu_tile(context, scanBarcodeNormal(), AppLocalizations.of(context)!.scanBarcode, Icons.qr_code)
+                      menu_tile(context, scanBarcodeNormal, AppLocalizations.of(context)!.scanBarcode, Icons.qr_code)
                   ],
                 )
               ],

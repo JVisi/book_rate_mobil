@@ -16,6 +16,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginState extends State<LoginScreen> {
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
   final email = TextEditingController();
   final password = TextEditingController();
   bool? keepLoginData = false;
@@ -86,7 +93,7 @@ class LoginState extends State<LoginScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => login(email.text, password.text, keepLoginData!, true, null)));
+                          builder: (context) => login(null, email.text, password.text, keepLoginData!, true, null)));
                   }
                   else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.fillCredsWarning),
@@ -118,11 +125,11 @@ class LoginState extends State<LoginScreen> {
     });
   }
 
-  login(String email, String password, bool keepLogin, bool needReloadButton, Widget? onError) {
+  login(BuildContext? foreignContext,String email, String password, bool keepLogin, bool needReloadButton, Widget? onError) {
     return LoadingHandler<User?>(
       future: RequestLogin(email: email,password: password,keepLogin: keepLoginData!).sendRequest,
       succeeding: (User? data){
-        AppModel.of(context).setUser(data!);
+        AppModel.of(foreignContext??context).setUser(data!);
         return MainPage(name: data.name);
       },
       onError: onError,

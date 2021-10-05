@@ -17,6 +17,12 @@ class LoadingHandler<T> extends StatefulWidget {
 }
 
 class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
   Future<T>? _future;
   bool? _needReloadButton;
 
