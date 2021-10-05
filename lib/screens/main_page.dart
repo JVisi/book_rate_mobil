@@ -26,34 +26,83 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   @override
   void setState(fn) {
-    if(mounted) {
-      super.setState(fn);
-    }
   }
-  String _scanBarcode="";
+
+  String _scanBarcode = "";
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     //return const LoadBooks();
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
             child: ListView(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    menu_tile(context, scanBarcodeNormal, AppLocalizations.of(context)!.loadBooks, null)
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(context, loadBooks,
+                          AppLocalizations.of(context)!.loadBooks, null)
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                      menu_tile(context, scanBarcodeNormal, AppLocalizations.of(context)!.scanBarcode, Icons.qr_code)
-                  ],
-                )
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.scanBarcode,
+                          Icons.qr_code)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.myBooks,
+                          Icons.collections_bookmark)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.whishList,
+                          Icons.list)
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menu_tile(
+                          context,
+                          scanBarcodeNormal,
+                          AppLocalizations.of(context)!.settings,
+                          Icons.settings)
+                    ],
+                  ),
+                ),
               ],
             ),
           )
@@ -76,30 +125,24 @@ class MainPageState extends State<MainPage> {
       barcodeScanRes = 'Failed to get platform version.';
     }
 
-    if (!mounted) return;
 
     setState(() {
       _scanBarcode = barcodeScanRes;
     });
   }
 
-}
-
-class LoadBooks extends StatelessWidget {
-  const LoadBooks({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return LoadingHandler(
-      future: GetWishlist(AppModel.of(context).getUser().id).sendRequest,
-      succeeding: (Wishlist wl) {
-        if(wl.wishlist.isNotEmpty) {
-          List<Book> l=wl.wishlist.map((e) => e.book).toList();
-          return Books(library: Library(books: l));
-        }
-        return EmptyWishlist(context);
-      },
-    );
+  Future<void> loadBooks() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoadingHandler(
+                  future: GetAllBooks()
+                      .sendRequest,
+                  succeeding: (Library wl) {
+                      //List<Book> l = wl.wishlist.map((e) => e.book).toList();
+                      return Books(library: wl);
+                    return EmptyWishlist(context);
+                  },
+                )));
   }
 }

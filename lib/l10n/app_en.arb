@@ -17,5 +17,8 @@
     "passwordMatch": "Passwords should match!",
     "loadBooks": "Load books",
     "wishlistEmpty": "Wishlist is empty!",
-    "scanBarcode":"Scan barcode"
+    "scanBarcode":"Scan barcode",
+    "myBooks":"My Books",
+    "whishList":"Wish List",
+    "settings":"Settings"
 }
