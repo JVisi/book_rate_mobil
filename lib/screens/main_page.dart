@@ -2,6 +2,7 @@ import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/book_page.dart';
+import 'package:book_rate/screens/menu_tile.dart';
 import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/serialized/wishList/wish_list.dart';
@@ -39,72 +40,13 @@ class MainPageState extends State<MainPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      child: Container(
-                        width: SizeConfig.screenWidth/3,
-                        height: SizeConfig.screenWidth/3,
-                        child: Card(
-                          color: Colors.indigo,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
-                                child: Icon(Icons.book,color: Colors.white,size: SizeConfig.blockSizeVertical*8,),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoadBooks()));
-                                  },
-                                  child: Text(AppLocalizations.of(context)!.loadBooks,style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
-                              ),
-                            ],
-                          ),
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        return print("sadf");
-                      },
-                    )
+                    menu_tile(context, scanBarcodeNormal(), AppLocalizations.of(context)!.loadBooks, null)
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GestureDetector(
-                      child: Container(
-                        width: SizeConfig.screenWidth/3,
-                        height: SizeConfig.screenWidth/3,
-                        child: Card(
-                          color: Colors.indigo,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
-                                child: Icon(Icons.book,color: Colors.white,size: SizeConfig.blockSizeVertical*8,),
-                              ),
-                              TextButton(
-                                onPressed: () async{
-                                  //Navigator.push(context, MaterialPageRoute(builder: (context)=>LoadBooks()));
-                                  await scanBarcodeNormal();
-                                },
-                                child: Text(AppLocalizations.of(context)!.loadBooks,style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
-                              ),
-                            ],
-                          ),
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                        ),
-                      ),
-                      onTap: () {
-                        return print("sadf");
-                      },
-                    )
+                      menu_tile(context, scanBarcodeNormal(), AppLocalizations.of(context)!.scanBarcode, Icons.qr_code)
                   ],
                 )
               ],

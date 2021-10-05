@@ -16,5 +16,6 @@
     "passwordAgain": "Jelszó újra",
     "passwordMatch": "A jelszavaknak egyezni kell",
     "loadBooks": "Könyvek",
-    "wishlistEmpty": "A kívánságlista üres!"
+    "wishlistEmpty": "A kívánságlista üres!",
+    "scanBarcode":"vonalkód olvasó"
 }
