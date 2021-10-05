@@ -17,8 +17,10 @@
     "passwordMatch": "A jelszavaknak egyezni kell",
     "loadBooks": "Könyvek",
     "wishlistEmpty": "A kívánságlista üres!",
-    "scanBarcode":"vonalkód olvasó",
-    "myBooks":"Könyeim",
-    "wishList":"Kivánság Lista",
-    "settings":"Beállítások"
+    "scanBarcode": "vonalkód olvasó",
+    "myBooks": "Könyeim",
+    "wishList": "Kivánság Lista",
+    "settings": "Beállítások",
+    "alertDialogTitle": "Figyelem!",
+    "alertDialogText": "Ez a könyv nem található"
 }

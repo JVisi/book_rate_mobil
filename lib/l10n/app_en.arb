@@ -20,5 +20,7 @@
     "scanBarcode":"Scan barcode",
     "myBooks":"My Books",
     "whishList":"Wish List",
-    "settings":"Settings"
+    "settings":"Settings",
+    "alertDialogTitle":"Warning!",
+    "alertDialogText":"This book is not in storage"
 }

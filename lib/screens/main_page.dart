@@ -1,6 +1,7 @@
 import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/config/model.dart';
+import 'package:book_rate/screens/book_detailed.dart';
 import 'package:book_rate/screens/book_page.dart';
 import 'package:book_rate/screens/menu_tile.dart';
 import 'package:book_rate/screens/wishlist_empty.dart';
@@ -27,7 +28,6 @@ class MainPage extends StatefulWidget {
 }
 
 class MainPageState extends State<MainPage> {
-
   String _scanBarcode = "";
 
   @override
@@ -82,11 +82,8 @@ class MainPageState extends State<MainPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      menu_tile(
-                          context,
-                          scanBarcodeNormal,
-                          AppLocalizations.of(context)!.whishList,
-                          Icons.list)
+                      menu_tile(context, scanBarcodeNormal,
+                          AppLocalizations.of(context)!.whishList, Icons.list)
                     ],
                   ),
                 ),
@@ -103,7 +100,6 @@ class MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
-
               ],
             ),
           )
@@ -119,13 +115,37 @@ class MainPageState extends State<MainPage> {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
 
-      await BarcodeSearch(barcode: barcodeScanRes).sendRequest();
-
+      if (barcodeScanRes != "-1") {
+        final response =
+            await BarcodeSearch(barcode: barcodeScanRes).sendRequest();
+        if (response != null) {
+          if (response.books.isNotEmpty) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        DetailedBook(book: response.books.first)));
+          } else if (response.books.isEmpty) {
+            showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: Text(AppLocalizations.of(context)!.alertDialogTitle),
+                content: Text(AppLocalizations.of(context)!.alertDialogText),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          }
+        }
+      }
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
-
 
     setState(() {
       _scanBarcode = barcodeScanRes;
@@ -137,12 +157,11 @@ class MainPageState extends State<MainPage> {
         context,
         MaterialPageRoute(
             builder: (context) => LoadingHandler(
-                  future: GetAllBooks()
-                      .sendRequest,
+                  future: GetAllBooks().sendRequest,
                   succeeding: (Library wl) {
-                      //List<Book> l = wl.wishlist.map((e) => e.book).toList();
-                      return Books(library: wl);
-                  return EmptyWishlist(context);
+                    //List<Book> l = wl.wishlist.map((e) => e.book).toList();
+                    return Books(library: wl);
+                    return EmptyWishlist(context);
                   },
                 )));
   }
