@@ -5,8 +5,9 @@ part 'message.g.dart';
 
 @JsonSerializable()
 class Message {
-  final String message;
-  Message({required this.message});
+  final String? message;
+  final String? error;
+  Message({this.message, this.error});
   factory Message.fromJson(Map<String, dynamic> json) => _$MessageFromJson(json);
   Map<String, dynamic> toJson() => _$MessageToJson(this);
 }

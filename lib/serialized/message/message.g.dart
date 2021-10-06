@@ -7,9 +7,11 @@ part of 'message.dart';
 // **************************************************************************
 
 Message _$MessageFromJson(Map<String, dynamic> json) => Message(
-      message: json['message'] as String,
+      message: json['message'] as String?,
+      error: json['error'] as String?,
     );
 
 Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
       'message': instance.message,
+      'error': instance.error,
     };
