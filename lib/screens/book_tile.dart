@@ -1,5 +1,6 @@
 
 import 'package:book_rate/config/model.dart';
+import 'package:book_rate/screens/book_detailed.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/web/rate_book.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +13,7 @@ Widget bookTile(BuildContext context, Book book){
         subtitle: Text(book.author),
       ),
       onTap: ()async {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailedBook(book: book)));
         ///await RateBook(rate: 5, ISBN: book.ISBN, userId: AppModel.of(context).getUser().id).sendRequest();
       },
     );
