@@ -22,5 +22,10 @@
     "whishList":"Wish List",
     "settings":"Settings",
     "alertDialogTitle":"Warning!",
-    "alertDialogText":"This book is not in storage"
+    "alertDialogText":"This book is not in storage",
+    "alertDialog_AlreadyRated":"You already rated this book!",
+    "alertDialog_Rated":"Thank you, you rated this book!",
+    "alertDialog_Error": "Error",
+    "alertDialog_OK": "Success!",
+    "alertDialog_Ratebtn": "Rate this book"
 }

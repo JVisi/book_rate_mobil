@@ -1,9 +1,12 @@
+import 'package:book_rate/config/core.dart';
+import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/config/model.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/web/rate_book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class DetailedBook extends StatefulWidget {
   final Book book;
@@ -17,6 +20,7 @@ class DetailedBook extends StatefulWidget {
 class DetailedBookState extends State<DetailedBook> {
   ///0-10
   int rate = 5;
+  bool isLoading = false;
 
   final List<Icon> stars = List.filled(
       10,
@@ -27,6 +31,7 @@ class DetailedBookState extends State<DetailedBook> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: Column(
         children: [
@@ -39,6 +44,11 @@ class DetailedBookState extends State<DetailedBook> {
             flex: 4,
             child: Column(
               children: [
+                if (isLoading)
+                  SpinKitWave(
+                    color: Colors.blue,
+                    size: SizeConfig.blockSizeVertical * 10,
+                  ),
                 Expanded(
                     flex: 1,
                     child: ListView.builder(
@@ -68,49 +78,58 @@ class DetailedBookState extends State<DetailedBook> {
           ),
           Expanded(
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.deepOrange),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.deepOrange,
+                  ),
                   onPressed: () async {
-                    final response = await RateBook(
-                            userId: AppModel.of(context).getUser().id,
-                            ISBN: widget.book.ISBN,
-                            rate: rate)
-                        .sendRequest();
-                    if (response!.message != null) {
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text(AppLocalizations.of(context)!.alertDialogTitle),
-                          content: Text(response.message!),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    else if(response.error!=null){
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: Text("Error"),
-                          content: Text(response.error!),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
-                      );
+                    if (isLoading == false) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await loadRating();
+                      setState(() {
+                        isLoading = false;
+                      });
                     }
                   },
-                  child: Text("Rate this book!"))),
+                  child:
+                      Text(AppLocalizations.of(context)!.alertDialog_Ratebtn))),
           const Expanded(flex: 2, child: Text(""))
         ],
       ),
     );
+  }
+
+  void showResultDialog(String title, String desc) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(desc),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, 'OK');
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> loadRating() async {
+    final response = await RateBook(
+            userId: AppModel.of(context).getUser().id,
+            ISBN: widget.book.ISBN,
+            rate: rate)
+        .sendRequest();
+
+    response!.message != null
+        ? showResultDialog(AppLocalizations.of(context)!.alertDialog_OK,
+            AppLocalizations.of(context)!.alertDialog_Rated)
+        : showResultDialog(AppLocalizations.of(context)!.alertDialog_Error,
+            AppLocalizations.of(context)!.alertDialog_AlreadyRated);
   }
 
   SliderTheme CustomSliderTheme(Slider slider) {
@@ -136,3 +155,63 @@ class DetailedBookState extends State<DetailedBook> {
         child: slider);
   }
 }
+
+/*
+if (isButtonDisabled) {
+                      ///Well, do nothing
+                    } else {
+                      setState(() {
+                        isButtonDisabled = true;
+                      });
+                      final response = await RateBook(
+                              userId: AppModel.of(context).getUser().id,
+                              ISBN: widget.book.ISBN,
+                              rate: rate)
+                          .sendRequest();
+
+                      if (response!.message != null) {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(
+                                AppLocalizations.of(context)!.alertDialog_OK),
+                            content: Text(AppLocalizations.of(context)!
+                                .alertDialog_Rated),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, 'OK');
+                                  setState(() {
+                                    isButtonDisabled = false;
+                                  });
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      } else if (response.error != null) {
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(AppLocalizations.of(context)!
+                                .alertDialog_Error),
+                            content: Text(AppLocalizations.of(context)!
+                                .alertDialog_AlreadyRated),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, 'OK');
+                                  setState(() {
+                                    isButtonDisabled = false;
+                                  });
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }
+
+*/

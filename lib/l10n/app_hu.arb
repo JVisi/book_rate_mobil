@@ -22,5 +22,10 @@
     "wishList": "Kivánság Lista",
     "settings": "Beállítások",
     "alertDialogTitle": "Figyelem!",
-    "alertDialogText": "Ez a könyv nem található"
+    "alertDialogText": "Ez a könyv nem található",
+    "alertDialog_AlreadyRated":"Már értékelte ezt a könyvet!",
+    "alertDialog_Rated":"Köszönjük az értékelést!",
+    "alertDialog_Error": "Hiba",
+    "alertDialog_OK": "Siker!",
+    "alertDialog_Ratebtn": "Értékeld ezt a könyvet"
 }
