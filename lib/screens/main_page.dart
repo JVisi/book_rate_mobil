@@ -3,7 +3,9 @@ import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/book_detailed.dart';
 import 'package:book_rate/screens/book_page.dart';
+import 'package:book_rate/screens/empty_widget.dart';
 import 'package:book_rate/screens/menu_tile.dart';
+import 'package:book_rate/screens/rated_book_page.dart';
 import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/serialized/rates/rates.dart';
@@ -71,7 +73,7 @@ class MainPageState extends State<MainPage> {
                     children: [
                       menu_tile(
                           context,
-                          scanBarcodeNormal,
+                          loadMyBooks,
                           AppLocalizations.of(context)!.myBooks,
                           Icons.collections_bookmark)
                     ],
@@ -82,7 +84,7 @@ class MainPageState extends State<MainPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      menu_tile(context, scanBarcodeNormal,
+                      menu_tile(context, loadWishList,
                           AppLocalizations.of(context)!.whishList, Icons.list)
                     ],
                   ),
@@ -164,5 +166,39 @@ class MainPageState extends State<MainPage> {
                     return EmptyWishlist(context);
                   },
                 )));
+  }
+
+  Future<void> loadWishList() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoadingHandler(
+                  future: GetWishlist(AppModel.of(context).getUser().id)
+                      .sendRequest,
+                  succeeding: (Wishlist wl) {
+                    List<Book> l = wl.wishlist.map((e) => e.book).toList();
+                    if (l.isNotEmpty) {
+                      return Books(library: Library(books: l));
+                    } else {
+                      return EmptyWidget(message: AppLocalizations.of(context)!.wishlistEmpty);
+                    }
+                  },
+                )));
+  }
+  Future<void> loadMyBooks() async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoadingHandler(
+              future: GetRatesOfUser(AppModel.of(context).getUser().id)
+                  .sendRequest,
+              succeeding: (Rates wl) {
+                if (wl.rates.isNotEmpty) {
+                  return RatedBooks(rates: wl);
+                } else {
+                  return EmptyWidget();      ///EmptyWidget neeeded
+                }
+              },
+            )));
   }
 }

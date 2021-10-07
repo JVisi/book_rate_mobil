@@ -27,5 +27,6 @@
     "alertDialog_Rated":"Köszönjük az értékelést!",
     "alertDialog_Error": "Hiba",
     "alertDialog_OK": "Siker!",
-    "alertDialog_Ratebtn": "Értékeld ezt a könyvet"
+    "alertDialog_Ratebtn": "Értékeld ezt a könyvet",
+    "empty": "Hoppá, itt még semmi sincs..."
 }

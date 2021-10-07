@@ -27,5 +27,6 @@
     "alertDialog_Rated":"Thank you, you rated this book!",
     "alertDialog_Error": "Error",
     "alertDialog_OK": "Success!",
-    "alertDialog_Ratebtn": "Rate this book"
+    "alertDialog_Ratebtn": "Rate this book",
+    "empty": "Oops, nothing's here..."
 }
