@@ -28,5 +28,6 @@
     "alertDialog_Error": "Hiba",
     "alertDialog_OK": "Siker!",
     "alertDialog_Ratebtn": "Értékeld ezt a könyvet",
-    "empty": "Hoppá, itt még semmi sincs..."
+    "empty": "Hoppá, itt még semmi sincs...",
+    "wishlistBook_Btn": "Kívánságlistához adás"
 }

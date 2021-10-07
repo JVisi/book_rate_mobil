@@ -10,15 +10,17 @@ class EmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Expanded(
-          child: Center(
-              child: Column(
-        children: [
-          Icon(icon??Icons.warning),
-          Text(message??AppLocalizations.of(context)!.empty)
-        ],
-      ))),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon ?? Icons.warning),
+              Text(message ?? AppLocalizations.of(context)!.empty)
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

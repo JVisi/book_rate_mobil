@@ -24,7 +24,7 @@ Widget ratedBookTile(BuildContext context, Book book, int rating){
   return GestureDetector(
     child: ListTile(
       title: Text(book.name+",  "+book.languageCode),
-      subtitle: Text(book.author+" ,rated: "+rating.toString()),
+      subtitle: Text(book.author+", rated: "+rating.toString()),
     ),
     onTap: ()async {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailedRate(book: book, rating: rating,)));

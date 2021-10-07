@@ -36,19 +36,34 @@ class DetailedBookState extends State<DetailedBook> {
       body: Column(
         children: [
           Expanded(
-              flex: 8,
+              flex: 6,
               child: Center(
                 child: Text(widget.book.name),
               )),
           Expanded(
-            flex: 4,
+              flex: 1,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(SizeConfig.screenWidth)),
+                      primary: Colors.deepOrange),
+                  onPressed: () {
+                    ///PUT IT ON WISHLIST HERE
+                  },
+                  child: Text(AppLocalizations.of(context)!.wishlistBook_Btn))),
+          Expanded(
+            flex: 8,
             child: Column(
               children: [
-                if (isLoading)
-                  SpinKitWave(
-                    color: Colors.blue,
-                    size: SizeConfig.blockSizeVertical * 10,
-                  ),
+                Expanded(
+                  flex: 2,
+                    child: isLoading
+                        ? SpinKitWave(
+                            color: Colors.blue,
+                            size: SizeConfig.blockSizeVertical * 10,
+                          )
+                        : Text("")),
                 Expanded(
                     flex: 1,
                     child: ListView.builder(
@@ -58,7 +73,7 @@ class DetailedBookState extends State<DetailedBook> {
                       itemBuilder: (context, index) => stars.elementAt(index),
                     )),
                 Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: CustomSliderTheme(
                       Slider(
                         value: rate.toDouble(),
@@ -77,6 +92,7 @@ class DetailedBookState extends State<DetailedBook> {
             ),
           ),
           Expanded(
+              flex: 2,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.deepOrange,
