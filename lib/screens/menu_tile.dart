@@ -10,7 +10,7 @@ Widget menu_tile<T>(BuildContext context, Future<T> Function() function, String 
       height: SizeConfig.screenHeight/4,
       child: Container(
         child:Card(
-        color: Colors.red,
+        color: CustomColors.cardsColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shake/shake.dart';
 
 class MainPage extends StatefulWidget {
   final String name;
@@ -28,16 +29,41 @@ class MainPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => MainPageState();
 }
-
+//static Color changedBackgroundColor = Colors.red;
+//static Color changedCardsColor = Colors.blue;
 class MainPageState extends State<MainPage> {
+  late ShakeDetector detector;
   String _scanBarcode = "";
+  @override
+  void initState() {
+    super.initState();
+     detector = ShakeDetector.autoStart(onPhoneShake: () {
+      setState(() {
+        if(CustomColors.backgroundColor==Colors.blue) {
+          CustomColors.backgroundColor = Colors.black;
+          CustomColors.cardsColor = Colors.grey;
+          CustomColors.textColor = Colors.grey;
 
+        }else{
+          CustomColors.backgroundColor = Colors.blue;
+          CustomColors.cardsColor = Colors.orangeAccent;
+          CustomColors.textColor = Colors.orangeAccent;
+        }
+      });
+
+    });
+  }
+  @override
+  void dispose(){
+    detector.stopListening();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     //return const LoadBooks();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: CustomColors.backgroundColor,
       body: Column(
         children: [
           Expanded(

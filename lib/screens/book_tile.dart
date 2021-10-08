@@ -1,4 +1,5 @@
 
+import 'package:book_rate/config/core.dart';
 import 'package:book_rate/config/model.dart';
 import 'package:book_rate/screens/book_detailed.dart';
 import 'package:book_rate/screens/rated_book_detailed.dart';
@@ -10,8 +11,8 @@ import 'package:flutter/material.dart';
 Widget bookTile(BuildContext context, Book book){
     return GestureDetector(
       child: ListTile(
-        title: Text(book.name+",  "+book.languageCode),
-        subtitle: Text(book.author),
+        title: Text(book.name+",  "+book.languageCode,style: TextStyle(color: CustomColors.textColor)),
+        subtitle: Text(book.author,style: TextStyle(color: CustomColors.textColor)),
       ),
       onTap: ()async {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailedBook(book: book)));

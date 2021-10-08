@@ -57,6 +57,11 @@ class SizeConfig {
     }
   }
 }
+class CustomColors{
+  static Color backgroundColor = Colors.blue;
+  static Color cardsColor = Colors.orangeAccent;
+  static Color textColor = Colors.orangeAccent;
+}
 
 class WebConfig {
   static String url = "https://bookrate-api.herokuapp.com";
