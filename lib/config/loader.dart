@@ -10,7 +10,11 @@ class LoadingHandler<T> extends StatefulWidget {
   final Widget? onError;
   final bool? needReloadButton;
 
-  LoadingHandler({@required this.future, @required this.succeeding, this.onError, this.needReloadButton});
+  LoadingHandler(
+      {@required this.future,
+      @required this.succeeding,
+      this.onError,
+      this.needReloadButton});
 
   @override
   LoadingHandlerState<T> createState() => LoadingHandlerState();
@@ -19,10 +23,11 @@ class LoadingHandler<T> extends StatefulWidget {
 class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
   @override
   void setState(fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }
+
   Future<T>? _future;
   bool? _needReloadButton;
 
@@ -43,12 +48,22 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
         builder: (BuildContext context, AsyncSnapshot<T> snapshot) =>
             SnapshotManager<T>(
                 snapshot: snapshot,
-                onError: <T>(T error){
-                    if(widget.onError!=null){
-                      return widget.onError!;
+                onError: <T>(T error) {
+                  if (widget.onError != null) {
+                    return widget.onError!;
+                  }
+                  if (error != null) {
+                    if (error.toString().length < 20) {
+                      return showErrorWidget(
+                          error.toString(), Icons.error, _needReloadButton);
+                    } else {
+                      return showErrorWidget(
+                          null, Icons.error, _needReloadButton);
                     }
-                    return showErrorWidget(error.toString(), Icons.error,_needReloadButton);
-                    },
+                  }
+
+                  return showErrorWidget(null, Icons.error, _needReloadButton);
+                },
                 onSuccess: (T data) => widget.succeeding!(data),
                 onWait: showLoadingWidget("", "", null)));
   }
@@ -59,33 +74,43 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
     });
   }
 
-  Widget showErrorWidget(String? name, IconData? icon, bool? needReload){
+  Widget showErrorWidget(String? name, IconData? icon, bool? needReload) {
     return Scaffold(
         body: Center(
-          child: Column(
-            children: <Widget>[
-              const Spacer(
-                flex: 1,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical:SizeConfig.blockSizeVertical),
-                child: Icon(icon ?? Icons.warning,color: Colors.red,),
-              ),
-              Text(name ?? AppLocalizations.of(context)!.error,
-                style: themeConfig().textTheme.bodyText1,),
-              needReload!=null?Padding(
-                padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
-                child: ElevatedButton(onPressed: refresh,
-                    child: Text(AppLocalizations.of(context)!.reloadBtn,style: themeConfig().textTheme.bodyText1)
-                ),
-              ): Text(""),
-              Spacer(
-                flex: 2,
-              )
-            ],
+      child: Column(
+        children: <Widget>[
+          const Spacer(
+            flex: 1,
           ),
-        ));
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical),
+            child: Icon(
+              icon ?? Icons.warning,
+              color: Colors.red,
+            ),
+          ),
+          Text(
+            name ?? AppLocalizations.of(context)!.error,
+            style: themeConfig().textTheme.bodyText1,
+          ),
+          needReload != null
+              ? Padding(
+                  padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical),
+                  child: ElevatedButton(
+                      onPressed: refresh,
+                      child: Text(AppLocalizations.of(context)!.reloadBtn,
+                          style: themeConfig().textTheme.bodyText1)),
+                )
+              : Text(""),
+          Spacer(
+            flex: 2,
+          )
+        ],
+      ),
+    ));
   }
+
   Widget showLoadingWidget(String? name, String? desc, IconData? icon) {
     return Scaffold(
         body: Column(
@@ -95,11 +120,12 @@ class LoadingHandlerState<T> extends State<LoadingHandler<T>> {
         ),
         SpinKitWave(
           color: Colors.blue,
-          size: SizeConfig.blockSizeVertical*10,
+          size: SizeConfig.blockSizeVertical * 10,
         ),
         Icon(icon ?? Icons.hourglass_empty),
-        Text(name ?? AppLocalizations.of(context)!.loading,style: themeConfig().textTheme.bodyText1),
-        Text(desc ?? "",style: themeConfig().textTheme.bodyText1),
+        Text(name ?? AppLocalizations.of(context)!.loading,
+            style: themeConfig().textTheme.bodyText1),
+        Text(desc ?? "", style: themeConfig().textTheme.bodyText1),
         Spacer(
           flex: 2,
         )

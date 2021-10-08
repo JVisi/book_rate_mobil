@@ -1,6 +1,6 @@
 {
     "helloWorld": "Hello World!",
-    "error": "Error",
+    "error": "Ooops, something broke",
     "reloadBtn": "Reload",
     "loading": "Now Loading...",
     "email": "Email address",
