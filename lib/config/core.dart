@@ -59,8 +59,9 @@ class SizeConfig {
 }
 class CustomColors{
   static Color backgroundColor = Colors.blue;
-  static Color cardsColor = Colors.orangeAccent;
+  static Color interact = Colors.orangeAccent;
   static Color textColor = Colors.orangeAccent;
+  static Color starColor = Colors.yellow;
 }
 
 class WebConfig {
