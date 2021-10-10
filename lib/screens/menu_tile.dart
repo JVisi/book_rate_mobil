@@ -20,7 +20,7 @@ Widget menu_tile<T>(BuildContext context, Future<T> Function() function, String 
               child: Icon(icon ?? Icons.book,color: Colors.white,size: SizeConfig.blockSizeVertical*8),
             ),
             TextButton(
-              onPressed: () {  },
+              onPressed: () async { await function(); },
               child: Text(title,style:TextStyle(color: Colors.white70,fontSize: SizeConfig.blockSizeVertical * 2.5) ,),
             ),
           ],
