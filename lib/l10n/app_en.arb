@@ -24,6 +24,8 @@
     "alertDialogTitle":"Warning!",
     "alertDialogText":"This book is not in storage",
     "alertDialog_AlreadyRated":"You already rated this book!",
+    "alertDialog_Wishlisted":"It's on your wishlist now!",
+    "alertDialog_AlreadyOnWishlist":"You already wishlisted this book!",
     "alertDialog_Rated":"Thank you, you rated this book!",
     "alertDialog_Error": "Error",
     "alertDialog_OK": "Success!",

@@ -3,6 +3,7 @@ import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/config/model.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/web/rate_book.dart';
+import 'package:book_rate/web/wishlist_book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -48,8 +49,16 @@ class DetailedBookState extends State<DetailedBook> {
                           borderRadius:
                               BorderRadius.circular(SizeConfig.screenWidth)),
                       primary: Colors.deepOrange),
-                  onPressed: () {
-                    ///PUT IT ON WISHLIST HERE
+                  onPressed: () async {
+                    if (isLoading == false) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      await loadWishlist();
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
                   },
                   child: Text(AppLocalizations.of(context)!.wishlistBook_Btn))),
           Expanded(
@@ -146,6 +155,18 @@ class DetailedBookState extends State<DetailedBook> {
             AppLocalizations.of(context)!.alertDialog_Rated)
         : showResultDialog(AppLocalizations.of(context)!.alertDialog_Error,
             AppLocalizations.of(context)!.alertDialog_AlreadyRated);
+  }
+  Future<void> loadWishlist() async {
+    final response = await WishListBook(
+        userId: AppModel.of(context).getUser().id,
+        ISBN: widget.book.ISBN)
+        .sendRequest();
+
+    response!.message != null
+        ? showResultDialog(AppLocalizations.of(context)!.alertDialog_OK,
+        AppLocalizations.of(context)!.alertDialog_Wishlisted)
+        : showResultDialog(AppLocalizations.of(context)!.alertDialog_Error,
+        AppLocalizations.of(context)!.alertDialog_AlreadyOnWishlist);
   }
 
   SliderTheme CustomSliderTheme(Slider slider) {
