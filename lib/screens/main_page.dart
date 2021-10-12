@@ -41,13 +41,15 @@ class MainPageState extends State<MainPage> {
       setState(() {
         if(CustomColors.backgroundColor==Colors.blue) {
           CustomColors.backgroundColor = Colors.black;
-          CustomColors.cardsColor = Colors.grey;
+          CustomColors.interact = Colors.grey;
           CustomColors.textColor = Colors.grey;
+          CustomColors.starColor = Colors.blueGrey;
 
         }else{
           CustomColors.backgroundColor = Colors.blue;
-          CustomColors.cardsColor = Colors.orangeAccent;
+          CustomColors.interact = Colors.orangeAccent;
           CustomColors.textColor = Colors.orangeAccent;
+          CustomColors.starColor = Colors.yellow;
         }
       });
 

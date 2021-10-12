@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shake/shake.dart';
 
 class DetailedBook extends StatefulWidget {
   final Book book;
@@ -22,24 +23,44 @@ class DetailedBookState extends State<DetailedBook> {
   ///0-10
   int rate = 5;
   bool isLoading = false;
+  late ShakeDetector detector;
+  @override
+  void initState() {
+    super.initState();
+    detector = ShakeDetector.autoStart(onPhoneShake: () {
+      setState(() {
+        CustomColors.backgroundColor = CustomColors.backgroundColor;
+        CustomColors.textColor = CustomColors.textColor ;
+        CustomColors.interact = CustomColors.interact;
+        CustomColors.starColor = CustomColors.starColor;
+      });
+
+    });
+  }
+  @override
+  void dispose(){
+    detector.stopListening();
+    super.dispose();
+  }
 
   final List<Icon> stars = List.filled(
       10,
       Icon(
         Icons.star,
-        color: Colors.amberAccent,
+        color: CustomColors.starColor,
       ));
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      backgroundColor: CustomColors.backgroundColor,
       body: Column(
         children: [
           Expanded(
               flex: 6,
               child: Center(
-                child: Text(widget.book.name),
+                child: Text(widget.book.name, style: TextStyle(color: CustomColors.textColor)),
               )),
           Expanded(
               flex: 1,
@@ -59,7 +80,7 @@ class DetailedBookState extends State<DetailedBook> {
                         isLoading = false;
                       });
                     }
-                  },
+                      primary: CustomColors.interact),
                   child: Text(AppLocalizations.of(context)!.wishlistBook_Btn))),
           Expanded(
             flex: 8,
@@ -104,7 +125,7 @@ class DetailedBookState extends State<DetailedBook> {
               flex: 2,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.deepOrange,
+                    primary: CustomColors.interact,
                   ),
                   onPressed: () async {
                     if (isLoading == false) {
@@ -172,19 +193,19 @@ class DetailedBookState extends State<DetailedBook> {
   SliderTheme CustomSliderTheme(Slider slider) {
     return SliderTheme(
         data: SliderTheme.of(context).copyWith(
-          activeTrackColor: Colors.red[700],
-          inactiveTrackColor: Colors.red[100],
+          activeTrackColor: CustomColors.interact,
+          inactiveTrackColor: Colors.white,
           trackShape: const RoundedRectSliderTrackShape(),
           trackHeight: 4.0,
           thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12.0),
-          thumbColor: Colors.redAccent,
+          thumbColor: CustomColors.interact = CustomColors.interact,
           overlayColor: Colors.red.withAlpha(32),
           overlayShape: const RoundSliderOverlayShape(overlayRadius: 28.0),
           tickMarkShape: const RoundSliderTickMarkShape(),
-          activeTickMarkColor: Colors.red[700],
-          inactiveTickMarkColor: Colors.red[100],
+          activeTickMarkColor: CustomColors.interact ,
+          inactiveTickMarkColor: Colors.white,
           valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-          valueIndicatorColor: Colors.redAccent,
+          valueIndicatorColor: CustomColors.interact,
           valueIndicatorTextStyle: const TextStyle(
             color: Colors.white,
           ),
