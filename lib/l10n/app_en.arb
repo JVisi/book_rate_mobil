@@ -1,5 +1,5 @@
 {
-    "helloWorld": "Hello World!",
+    "greeting": "Good morning ma'am",
     "error": "Ooops, something broke",
     "reloadBtn": "Reload",
     "loading": "Now Loading...",
@@ -31,5 +31,6 @@
     "alertDialog_OK": "Success!",
     "alertDialog_Ratebtn": "Rate this book",
     "empty": "Oops, nothing's here...",
-    "wishlistBook_Btn": "Put on wishlist"
+    "wishlistBook_Btn": "Put on wishlist",
+    "logout": "Logout and close"
 }
