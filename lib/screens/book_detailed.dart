@@ -90,7 +90,7 @@ class DetailedBookState extends State<DetailedBook> {
                   flex: 2,
                     child: isLoading
                         ? SpinKitWave(
-                            color: Colors.blue,
+                            color: CustomColors.interact,
                             size: SizeConfig.blockSizeVertical * 10,
                           )
                         : Text("")),
