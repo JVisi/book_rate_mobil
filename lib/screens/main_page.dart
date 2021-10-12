@@ -6,7 +6,6 @@ import 'package:book_rate/screens/book_page.dart';
 import 'package:book_rate/screens/empty_widget.dart';
 import 'package:book_rate/screens/menu_tile.dart';
 import 'package:book_rate/screens/rated_book_page.dart';
-import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/serialized/rates/rates.dart';
 import 'package:book_rate/serialized/wishList/wish_list.dart';
@@ -117,19 +116,6 @@ class MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      menu_tile(
-                          context,
-                          scanBarcodeNormal,
-                          AppLocalizations.of(context)!.settings,
-                          Icons.settings)
-                    ],
-                  ),
-                ),
               ],
             ),
           )
@@ -191,7 +177,6 @@ class MainPageState extends State<MainPage> {
                   succeeding: (Library wl) {
                     //List<Book> l = wl.wishlist.map((e) => e.book).toList();
                     return Books(library: wl);
-                    return EmptyWishlist(context);
                   },
                 )));
   }

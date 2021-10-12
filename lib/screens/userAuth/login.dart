@@ -22,7 +22,6 @@ class LoginState extends State<LoginScreen> {
       super.setState(fn);
     }
   }
-
   final email = TextEditingController();
   final password = TextEditingController();
   bool? keepLoginData = false;
@@ -36,6 +35,7 @@ class LoginState extends State<LoginScreen> {
     super.initState();
     email.addListener(checkEmail);
     password.addListener(checkPassword);
+
   }
 
   @override
@@ -43,11 +43,12 @@ class LoginState extends State<LoginScreen> {
     SizeConfig().init(context);
     // TODO: implement build
     return Scaffold(
+      backgroundColor: CustomColors.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: <Widget>[
-            Text(AppLocalizations.of(context)!.helloWorld),
+            Text(AppLocalizations.of(context)!.helloWorld,style: TextStyle(color: CustomColors.textColor),),
             const Spacer(flex: 1,),
             AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
