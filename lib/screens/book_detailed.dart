@@ -69,7 +69,7 @@ class DetailedBookState extends State<DetailedBook> {
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(SizeConfig.screenWidth)),
-                      primary: Colors.deepOrange),
+                      primary: CustomColors.interact,),
                   onPressed: () async {
                     if (isLoading == false) {
                       setState(() {
@@ -80,7 +80,7 @@ class DetailedBookState extends State<DetailedBook> {
                         isLoading = false;
                       });
                     }
-                      primary: CustomColors.interact),
+                  },
                   child: Text(AppLocalizations.of(context)!.wishlistBook_Btn))),
           Expanded(
             flex: 8,
