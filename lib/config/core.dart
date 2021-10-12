@@ -82,5 +82,5 @@ class ListViewWithoutGlowEffect extends ScrollBehavior{
 ThemeData themeConfig() => ThemeData(
     iconTheme: IconThemeData(size: SizeConfig.blockSizeVertical * 7),
     textTheme: TextTheme(
-        bodyText2: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5, fontWeight: FontWeight.bold),
-        bodyText1: TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.5)));
+        bodyText2: TextStyle(fontSize: SizeConfig.blockSizeVertical * 5, fontWeight: FontWeight.bold, color:CustomColors.textColor),
+        bodyText1: TextStyle(fontSize: SizeConfig.blockSizeVertical * 2.5, color:CustomColors.textColor)));

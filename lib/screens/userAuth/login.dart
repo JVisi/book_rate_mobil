@@ -17,17 +17,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginState extends State<LoginScreen> {
-  @override
-  void setState(fn) {
-    if(mounted) {
-      super.setState(fn);
-    }
-  }
   final email = TextEditingController();
   final password = TextEditingController();
   bool? keepLoginData = false;
 
-  late ShakeDetector detector;
 
   bool? isEmailOK=false;
   bool? isPasswordOK=false;
@@ -36,24 +29,10 @@ class LoginState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    detector = ShakeDetector.autoStart(onPhoneShake: () {
-      setState(() {
-        if (CustomColors.backgroundColor == Colors.blue) {
-          CustomColors.backgroundColor = Colors.black;
-          CustomColors.interact = Colors.grey;
-          CustomColors.textColor = Colors.grey;
-        } else {
-          CustomColors.backgroundColor = Colors.blue;
-          CustomColors.interact = Colors.orangeAccent;
-          CustomColors.textColor = Colors.orangeAccent;
-        }
-      });
-    });
     email.addListener(checkEmail);
     password.addListener(checkPassword);
 
   }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -64,20 +43,22 @@ class LoginState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: <Widget>[
-            Text(AppLocalizations.of(context)!.greeting,style: TextStyle(color: CustomColors.textColor),),
+            Text(AppLocalizations.of(context)!.greeting,style: TextStyle(color: CustomColors.textColor)),
             const Spacer(flex: 1,),
             AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,
+                cursorColor: CustomColors.textColor,
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,hintStyle: TextStyle(color:CustomColors.textColor),
                 errorText: !isEmailOK! && email.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                 controller: email,
-                style: themeConfig().textTheme.bodyText1,
+                style: themeConfig().textTheme.bodyText1 ,
               ),
             ),
             AspectRatio(
               aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(
-                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,
+                  cursorColor: CustomColors.textColor,
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,hintStyle: TextStyle(color:CustomColors.textColor),
                 errorText: !isPasswordOK! && password.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                 controller: password,
                 obscureText: true, style: themeConfig().textTheme.bodyText1
@@ -90,6 +71,8 @@ class LoginState extends State<LoginScreen> {
                 children: <Widget>[
                   Text(AppLocalizations.of(context)!.saveLogin,style: themeConfig().textTheme.bodyText1),
                   Checkbox(
+                    checkColor: CustomColors.interact,
+                      focusColor: CustomColors.interact,
                       value: keepLoginData,
                       onChanged: (bool? _val) {
                         setState(() {
@@ -102,6 +85,7 @@ class LoginState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*2),
               child: ElevatedButton(style: ElevatedButton.styleFrom(
+                primary: Colors.deepOrangeAccent,
                 padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*2,horizontal: SizeConfig.blockSizeHorizontal*10)
               ),
                 child: Text(AppLocalizations.of(context)!.loginBtn,style: themeConfig().textTheme.bodyText1),

@@ -42,6 +42,7 @@ class RegisterState extends State<RegisterScreen> {
     SizeConfig().init(context);
     // TODO: implement build
     return Scaffold(
+      backgroundColor: CustomColors.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Padding(
@@ -53,7 +54,7 @@ class RegisterState extends State<RegisterScreen> {
                   child: ListView(children: [
                     AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,
+                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.email,hintStyle: TextStyle(color:CustomColors.textColor),
                             errorText: !isEmailOK! && email.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                         controller: email,
                         style: themeConfig().textTheme.bodyText1,
@@ -61,7 +62,7 @@ class RegisterState extends State<RegisterScreen> {
                     ),
                     AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.username,
+                        decoration: InputDecoration(hintText: AppLocalizations.of(context)!.username,hintStyle: TextStyle(color:CustomColors.textColor),
                             errorText: !isNameOK! && name.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                         controller: name,
                         style: themeConfig().textTheme.bodyText1,
@@ -70,7 +71,7 @@ class RegisterState extends State<RegisterScreen> {
                     AspectRatio(
                       aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password,hintStyle: TextStyle(color:CustomColors.textColor),
                               errorText: !isPasswordOK! && password.text.isNotEmpty?AppLocalizations.of(context)!.lengthWarning:null),
                           controller: password,
                           obscureText: true, style: themeConfig().textTheme.bodyText1
@@ -79,7 +80,7 @@ class RegisterState extends State<RegisterScreen> {
                     AspectRatio(
                       aspectRatio: SizeConfig.blockSizeVertical,
                       child: TextFormField(
-                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain,
+                          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain,hintStyle: TextStyle(color:CustomColors.textColor),
                               errorText: !doPasswordsMatch! && password.text.isNotEmpty?AppLocalizations.of(context)!.passwordMatch:null),
                           controller: password2,
                           obscureText: true, style: themeConfig().textTheme.bodyText1
@@ -92,6 +93,7 @@ class RegisterState extends State<RegisterScreen> {
                         children: <Widget>[
                           Text(AppLocalizations.of(context)!.saveLogin,style: themeConfig().textTheme.bodyText1),
                           Checkbox(
+                            checkColor: CustomColors.interact,
                               value: keepLoginData,
                               onChanged: (bool? _val) {
                                 setState(() {
@@ -102,8 +104,10 @@ class RegisterState extends State<RegisterScreen> {
                       ),
                     ),
                     Padding(
+
                       padding: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical*2),
                       child: ElevatedButton(style: ElevatedButton.styleFrom(
+                          primary: Colors.deepOrangeAccent,
                           padding: EdgeInsets.symmetric(vertical: SizeConfig.blockSizeVertical*2,horizontal: SizeConfig.blockSizeHorizontal*10)
                       ),
                         child: Text(AppLocalizations.of(context)!.regBtn,style: themeConfig().textTheme.bodyText1),
