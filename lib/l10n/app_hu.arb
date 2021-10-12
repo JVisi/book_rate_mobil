@@ -1,5 +1,5 @@
 {
-    "helloWorld": "Hello World!",
+    "greeting": "Jóreggelt tanárnő!",
     "error": "Hoppá... Valami nem jó",
     "reloadBtn": "Újratölt",
     "loading": "Betöltés...",
@@ -31,5 +31,6 @@
     "alertDialog_OK": "Siker!",
     "alertDialog_Ratebtn": "Értékeld ezt a könyvet",
     "empty": "Hoppá, itt még semmi sincs...",
-    "wishlistBook_Btn": "Kívánságlistához adás"
+    "wishlistBook_Btn": "Kívánságlistához adás",
+    "logout": "Kilépés és bezárás"
 }

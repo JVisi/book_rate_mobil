@@ -47,7 +47,7 @@ class LoginState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: <Widget>[
-            Text(AppLocalizations.of(context)!.helloWorld),
+            Text(AppLocalizations.of(context)!.greeting),
             const Spacer(flex: 1,),
             AspectRatio(aspectRatio: SizeConfig.blockSizeVertical,
               child: TextFormField(

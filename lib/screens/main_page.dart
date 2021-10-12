@@ -6,7 +6,6 @@ import 'package:book_rate/screens/book_page.dart';
 import 'package:book_rate/screens/empty_widget.dart';
 import 'package:book_rate/screens/menu_tile.dart';
 import 'package:book_rate/screens/rated_book_page.dart';
-import 'package:book_rate/screens/wishlist_empty.dart';
 import 'package:book_rate/serialized/book/book.dart';
 import 'package:book_rate/serialized/rates/rates.dart';
 import 'package:book_rate/serialized/wishList/wish_list.dart';
@@ -34,32 +33,33 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   late ShakeDetector detector;
   String _scanBarcode = "";
+
   @override
   void initState() {
     super.initState();
-     detector = ShakeDetector.autoStart(onPhoneShake: () {
+    detector = ShakeDetector.autoStart(onPhoneShake: () {
       setState(() {
-        if(CustomColors.backgroundColor==Colors.blue) {
+        if (CustomColors.backgroundColor == Colors.blue) {
           CustomColors.backgroundColor = Colors.black;
           CustomColors.interact = Colors.grey;
           CustomColors.textColor = Colors.grey;
           CustomColors.starColor = Colors.blueGrey;
-
-        }else{
+        } else {
           CustomColors.backgroundColor = Colors.blue;
           CustomColors.interact = Colors.orangeAccent;
           CustomColors.textColor = Colors.orangeAccent;
           CustomColors.starColor = Colors.yellow;
         }
       });
-
     });
   }
+
   @override
-  void dispose(){
+  void dispose() {
     detector.stopListening();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -124,9 +124,9 @@ class MainPageState extends State<MainPage> {
                     children: [
                       menu_tile(
                           context,
-                          scanBarcodeNormal,
-                          AppLocalizations.of(context)!.settings,
-                          Icons.settings)
+                          logout,
+                          AppLocalizations.of(context)!.logout,
+                          Icons.logout)
                     ],
                   ),
                 ),
@@ -138,6 +138,11 @@ class MainPageState extends State<MainPage> {
     );
   }
 
+  Future<void> logout() async{
+    await killLoginCreds();
+    SystemNavigator.pop();
+  }
+
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -147,7 +152,7 @@ class MainPageState extends State<MainPage> {
 
       if (barcodeScanRes != "-1") {
         final response =
-            await BarcodeSearch(barcode: barcodeScanRes).sendRequest();
+        await BarcodeSearch(barcode: barcodeScanRes).sendRequest();
         if (response != null) {
           if (response.books.isNotEmpty) {
             Navigator.push(
@@ -158,16 +163,18 @@ class MainPageState extends State<MainPage> {
           } else if (response.books.isEmpty) {
             showDialog<String>(
               context: context,
-              builder: (BuildContext context) => AlertDialog(
-                title: Text(AppLocalizations.of(context)!.alertDialogTitle),
-                content: Text(AppLocalizations.of(context)!.alertDialogText),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
-                    child: const Text('OK'),
+              builder: (BuildContext context) =>
+                  AlertDialog(
+                    title: Text(AppLocalizations.of(context)!.alertDialogTitle),
+                    content: Text(
+                        AppLocalizations.of(context)!.alertDialogText),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
                   ),
-                ],
-              ),
             );
           }
         }
@@ -186,12 +193,12 @@ class MainPageState extends State<MainPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LoadingHandler(
+            builder: (context) =>
+                LoadingHandler(
                   future: GetAllBooks().sendRequest,
                   succeeding: (Library wl) {
                     //List<Book> l = wl.wishlist.map((e) => e.book).toList();
                     return Books(library: wl);
-                    return EmptyWishlist(context);
                   },
                 )));
   }
@@ -200,33 +207,46 @@ class MainPageState extends State<MainPage> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LoadingHandler(
-                  future: GetWishlist(AppModel.of(context).getUser().id)
+            builder: (context) =>
+                LoadingHandler(
+                  future: GetWishlist(AppModel
+                      .of(context)
+                      .getUser()
+                      .id)
                       .sendRequest,
                   succeeding: (Wishlist wl) {
                     List<Book> l = wl.wishlist.map((e) => e.book).toList();
                     if (l.isNotEmpty) {
                       return Books(library: Library(books: l));
                     } else {
-                      return EmptyWidget(message: AppLocalizations.of(context)!.wishlistEmpty);
+                      return EmptyWidget(
+                          message: AppLocalizations.of(context)!.wishlistEmpty);
                     }
                   },
                 )));
   }
+
   Future<void> loadMyBooks() async {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LoadingHandler(
-              future: GetRatesOfUser(AppModel.of(context).getUser().id)
-                  .sendRequest,
-              succeeding: (Rates wl) {
-                if (wl.rates.isNotEmpty) {
-                  return RatedBooks(rates: wl);
-                } else {
-                  return EmptyWidget();      ///EmptyWidget neeeded
-                }
-              },
-            )));
+            builder: (context) =>
+                LoadingHandler(
+                  future: GetRatesOfUser(AppModel
+                      .of(context)
+                      .getUser()
+                      .id)
+                      .sendRequest,
+                  succeeding: (Rates wl) {
+                    if (wl.rates.isNotEmpty) {
+                      return RatedBooks(rates: wl);
+                    } else {
+                      return EmptyWidget(
+                          message: AppLocalizations.of(context)!.empty);
+
+                      ///EmptyWidget neeeded
+                    }
+                  },
+                )));
   }
 }
