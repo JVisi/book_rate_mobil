@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shake/shake.dart';
 
 class DetailedRate extends StatefulWidget {
   final Book book;
@@ -19,16 +20,35 @@ class DetailedRate extends StatefulWidget {
 }
 
 class DetailedRateState extends State<DetailedRate> {
+  late ShakeDetector detector;
+  @override
+  void initState() {
+    super.initState();
+    detector = ShakeDetector.autoStart(onPhoneShake: () {
+      setState(() {
+        CustomColors.backgroundColor = CustomColors.backgroundColor;
+        CustomColors.textColor = CustomColors.textColor ;
+        CustomColors.starColor = CustomColors.starColor;
+      });
+
+    });
+  }
+  @override
+  void dispose(){
+    detector.stopListening();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
+      backgroundColor: CustomColors.backgroundColor,
       body: Column(
         children: [
           Expanded(
               flex: 8,
               child: Center(
-                child: Text(widget.book.name + widget.rating.toString()),
+                child: Text(widget.book.name + widget.rating.toString(), style: TextStyle(color: CustomColors.textColor)),
               )),
         ],
       ),
