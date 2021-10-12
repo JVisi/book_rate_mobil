@@ -7,6 +7,7 @@ import 'package:book_rate/config/loader.dart';
 import 'package:book_rate/serialized/user/user.dart';
 import 'package:book_rate/web/request_login.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shake/shake.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -26,6 +27,8 @@ class LoginState extends State<LoginScreen> {
   final password = TextEditingController();
   bool? keepLoginData = false;
 
+  late ShakeDetector detector;
+
   bool? isEmailOK=false;
   bool? isPasswordOK=false;
 
@@ -33,6 +36,19 @@ class LoginState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    detector = ShakeDetector.autoStart(onPhoneShake: () {
+      setState(() {
+        if (CustomColors.backgroundColor == Colors.blue) {
+          CustomColors.backgroundColor = Colors.black;
+          CustomColors.interact = Colors.grey;
+          CustomColors.textColor = Colors.grey;
+        } else {
+          CustomColors.backgroundColor = Colors.blue;
+          CustomColors.interact = Colors.orangeAccent;
+          CustomColors.textColor = Colors.orangeAccent;
+        }
+      });
+    });
     email.addListener(checkEmail);
     password.addListener(checkPassword);
 
