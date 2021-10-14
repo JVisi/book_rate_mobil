@@ -32,5 +32,7 @@
     "alertDialog_Ratebtn": "Rate this book",
     "empty": "Oops, nothing's here...",
     "wishlistBook_Btn": "Put on wishlist",
-    "logout": "Logout and close"
+    "logout": "Logout and close",
+    "given_stars":"Given stars by users",
+    "star_label": "star"
 }

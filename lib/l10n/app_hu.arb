@@ -32,5 +32,7 @@
     "alertDialog_Ratebtn": "Értékeld ezt a könyvet",
     "empty": "Hoppá, itt még semmi sincs...",
     "wishlistBook_Btn": "Kívánságlistához adás",
-    "logout": "Kilépés és bezárás"
+    "logout": "Kilépés és bezárás",
+    "given_stars":"Mások értékelései",
+    "star_label": "csill."
 }
